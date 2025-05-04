@@ -10,5 +10,5 @@ fun main() {
     val director = Director("Andrey", 30)
     director.takeCoffee(assistant, coffee)
     consultant.costumerClient()
-    println("\n${consultant.name} served ${consultant.costumerClient()} client")
+
 }

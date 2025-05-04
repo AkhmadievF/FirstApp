@@ -16,5 +16,8 @@ class Assistant(val name: String,
         }
         return "Espresso"
     }
+    fun work(){
+        println("I am answering phone...")
+    }
 
 }

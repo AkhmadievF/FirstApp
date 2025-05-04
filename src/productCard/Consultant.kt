@@ -3,9 +3,9 @@ package productCard
 import kotlin.random.Random
 
 class Consultant(
-    val name: String,
-    val age:Int = 0
-) {
+   name: String,
+   age:Int = 0
+): Worker(name, age) {
     fun sayHello(){
         print("Hi! My name is $name.")
         if (age>0){
@@ -13,11 +13,11 @@ class Consultant(
         }
 
     }
-    fun costumerClient(): Int{
+    fun costumerClient(){
         val rand = Random.nextInt(1, 100)
         repeat(rand) {
-            print("consume client...")
+            print("The costumer is served...")
         }
-        return rand
+        println("\n${name} served $rand client")
     }
 }
