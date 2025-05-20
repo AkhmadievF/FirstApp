@@ -7,7 +7,7 @@ class Director(name: String,
         println("Thank you ${assistant.name}. $coffeeType is very tasty!")
     }
     fun forceConsul(consultant: Consultant){
-        consultant.costumerClient()
+        consultant.work()
     }
 
     override fun work() {

@@ -13,7 +13,8 @@ class Consultant(
         }
 
     }
-    fun costumerClient(){
+
+    override fun work() {
         val rand = Random.nextInt(1, 100)
         repeat(rand) {
             print("The costumer is served...")
