@@ -1,3 +1,5 @@
+package other
+
 fun main() {
     val target = readln().toInt()
     var count = 0

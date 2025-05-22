@@ -1,3 +1,5 @@
+package other
+
 fun main() {
     val weight = readln().toInt()
     var price = 0

@@ -1,3 +1,5 @@
+package other
+
 class Shape {
     private val length: Int
     private val width: Int

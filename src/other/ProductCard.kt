@@ -1,3 +1,5 @@
+package other
+
 class ProductCard(val name:String,
                   val brand:String,
                   val size:Float,
