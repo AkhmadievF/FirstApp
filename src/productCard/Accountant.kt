@@ -35,7 +35,7 @@ class Accountant(
 
                 OperationCode.SHOW_ITEMS -> {
                     for (item in items){
-                        println(item)
+                        item.printInfo()
                     }
                 }
             }
@@ -48,17 +48,23 @@ class Accountant(
         val products = item.trim().split("\n")
         for (product in products){
             val itemArray = product.split("%")
-            when {
-                itemArray.contains("FOOD") -> {
-                    items.add(FoodCard(itemArray[0], itemArray[1], itemArray[2].toInt(), itemArray[3].toInt()))
+            val name = itemArray[0]
+            val brand = itemArray[1]
+            val price = itemArray[2]
+            val type = itemArray.last()
+            val productType = ProductTypes.valueOf(type)
+            val productCard = when(productType) {
+                ProductTypes.FOOD -> {
+                    FoodCard(name,brand,price.toInt(), itemArray[3].toInt())
                 }
-                itemArray.contains("SHOE") -> {
-                    items.add(ShoesCard(itemArray[0], itemArray[1], itemArray[2].toInt(), itemArray[3].toFloat()))
+                ProductTypes.APPLIANCE -> {
+                    ApplianceCard(name,brand,price.toInt(), itemArray[3].toInt())
                 }
-                itemArray.contains("APPLIANCE") -> {
-                    items.add(ApplianceCard(itemArray[0], itemArray[1], itemArray[2].toInt(), itemArray[3].toInt()))
+                ProductTypes.SHOE -> {
+                    ShoesCard(name,brand,price.toInt(), itemArray[3].toFloat())
                 }
             }
+            productCard.printInfo()
         }
 
     }
