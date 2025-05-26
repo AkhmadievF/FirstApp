@@ -28,7 +28,7 @@ fun main() {
                 }
             }
 
-            SHOW_ITEMS -> TODO()
+            REMOVE_PRODUCT_CARD -> TODO()
         }
     }
 

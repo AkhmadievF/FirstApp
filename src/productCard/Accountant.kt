@@ -26,25 +26,94 @@ class Accountant(
                     break
                 }
 
-                OperationCode.REGISTER_NEW_ITEM ->{
+                OperationCode.REGISTER_NEW_ITEM -> {
                     registerNewItem()
                 }
+
                 OperationCode.SHOW_INFO -> {
                     showInfo()
                 }
 
-                OperationCode.SHOW_ITEMS -> {
-                    for (item in items){
-                        item.printInfo()
-                    }
+                OperationCode.REMOVE_PRODUCT_CARD -> {
+                    removeProductCard()
                 }
             }
 
         }
 
     }
+
+    fun removeProductCard() {
+        val itemsInArray:MutableList<ProductCard> = loadAllCards()
+        println("Enter the name of card: ")
+        val nameOfCard = readln()
+        for (card in itemsInArray){
+            itemsInArray.remove(card)
+            break
+        }
+        file.writeText("")
+        for (card in itemsInArray){
+            saveProductCardToFile(card)
+        }
+    }
+   private fun loadAllCards(): MutableList<ProductCard> {
+        val itemsInArray = mutableListOf<ProductCard>()
+        val items = file.readText()
+       if (items.isEmpty()){
+           return itemsInArray
+       }
+        val cards = items.trim().split("\n")
+        for (card in cards) {
+            val elementOfCard = card.trim().split("%")
+            val name = elementOfCard[0]
+            val brand = elementOfCard[1]
+            val price = elementOfCard[2]
+            val type = elementOfCard.last()
+            val productType = ProductTypes.valueOf(type)
+            val productCard = when (productType) {
+                ProductTypes.FOOD -> {
+                    FoodCard(name, brand, price.toInt(), elementOfCard[3].toInt())
+                }
+
+                ProductTypes.APPLIANCE -> {
+                    ApplianceCard(name, brand, price.toInt(), elementOfCard[3].toInt())
+                }
+
+                ProductTypes.SHOE -> {
+                    ShoesCard(name, brand, price.toInt(), elementOfCard[3].toFloat())
+                }
+            }
+            itemsInArray.add(productCard)
+
+        }
+        return itemsInArray
+    }
+
+    fun saveProductCardToFile(productCard: ProductCard){
+        file.appendText("${productCard.name}%")
+        file.appendText("${productCard.brand}%")
+        file.appendText("${productCard.price}%")
+        if (productCard is FoodCard){
+            val caloric = productCard.caloric
+            file.appendText("$caloric%${ProductTypes.FOOD}\n")
+        }
+        else if (productCard is ApplianceCard){
+            val wattage = productCard.wattage
+            file.appendText("$wattage%${ProductTypes.APPLIANCE}\n")
+        }
+        else if (productCard is ShoesCard){
+            val size = productCard.size
+            file.appendText("$size%${ProductTypes.SHOE}\n")
+        }
+
+    }
+
+
     private fun showInfo(){
         val item = file.readText()
+        if (item.isEmpty()){
+            return
+        }
         val products = item.trim().split("\n")
         for (product in products){
             val itemArray = product.split("%")
