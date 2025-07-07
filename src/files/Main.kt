@@ -29,6 +29,9 @@ fun main() {
             }
 
             REMOVE_PRODUCT_CARD -> TODO()
+            REGISTER_NEW_EMPLOYEE -> TODO()
+            FIRE_AN_EMPLOYEE -> TODO()
+            SHOW_ALL_EMPLOYEE -> TODO()
         }
     }
 

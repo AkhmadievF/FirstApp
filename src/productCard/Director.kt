@@ -1,7 +1,9 @@
 package productCard
 
-class Director(name: String,
-    age: Int): Worker(name, age) {
+class Director(
+    id: Int,
+    name: String,
+    age: Int): Worker(id, name, age) {
     fun takeCoffee(assistant: Assistant, coffeeType: String){
         assistant.bringCoffee(1,coffeeType)
         println("Thank you ${assistant.name}. $coffeeType is very tasty!")

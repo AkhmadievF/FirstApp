@@ -10,15 +10,17 @@ class Accountant(
     val items = mutableListOf<ProductCard>()
     val productTypes = ProductTypes.entries
     val operationCode = OperationCode.entries
+    val positionCode = PositionCode.entries
     val file = File("ProductCards")
+    val fileWorker = File("Workers")
 
     override fun work() {
         while (true) {
-            print("Enter the operation code.")
+            println("Enter the operation code.")
             for ((index, code) in operationCode.withIndex()) {
-                print(" $index - ${code.title},")
+                println(" $index - ${code.title}")
             }
-            println("\b:")
+            //println("\b:")
             val code = readln().toInt()
             val codeIndex = operationCode[code]
             when (codeIndex) {
@@ -37,6 +39,12 @@ class Accountant(
                 OperationCode.REMOVE_PRODUCT_CARD -> {
                     removeProductCard()
                 }
+
+                OperationCode.REGISTER_NEW_EMPLOYEE -> {
+                    registerNewEmployee()
+                }
+                OperationCode.FIRE_AN_EMPLOYEE -> TODO()
+                OperationCode.SHOW_ALL_EMPLOYEE -> TODO()
             }
 
         }
@@ -138,6 +146,104 @@ class Accountant(
 
     }
 
+    private fun registerNewEmployee() {
+
+        print("Choose position ")
+        for ((type, index) in positionCode.withIndex()) {
+            print(" ${index.title} - $type,")
+        }
+        println("\b:")
+        val index = readln().toInt()
+        val positionCodeIndex = positionCode[index]
+        val id = enterId()
+        fileWorker.appendText("$id%")
+        val name = enterNameWorker()
+        fileWorker.appendText("$name%")
+        val age = enterAge()
+        fileWorker.appendText("$age%")
+//        when (positionCodeIndex) {
+//            PositionCode.DIRECTOR -> {
+//                print("Enter the product caloric: ")
+//                val caloric = readln().toInt()
+//                fileWorker.appendText("$caloric%")
+//            }
+//
+//            PositionCode.ACCOUNTANT -> {
+//                print("Enter the product wattage: ")
+//                val wattage = readln().toInt()
+//                fileWorker.appendText("$wattage%")
+//            }
+//
+//            PositionCode.ASSISTANT-> {
+//                print("Enter the product size: ")
+//                val size = readln().toFloat()
+//                fileWorker.appendText("$size%")
+//            }
+//            PositionCode.CONSULTANT -> {
+//
+//            }
+
+        fileWorker.appendText("$positionCodeIndex\n")
+
+    }
+    private fun showAllEmployees(){
+        val worker = fileWorker.readText()
+        if (worker.isEmpty()){
+            return
+        }
+        val workers = worker.trim().split("\n")
+        for (person in workers){
+            val itemArray = person.split("%")
+            val id = itemArray[0]
+            val name = itemArray[1]
+            val age = itemArray[2]
+            val type = itemArray.last()
+            val positionCode = PositionCode.valueOf(type)
+            val worker = when(positionCode) {
+                PositionCode.DIRECTOR -> {
+                    Director(id, name, age)
+                }
+                ProductTypes.APPLIANCE -> {
+                    ApplianceCard(name,brand,price.toInt(), itemArray[3].toInt())
+                }
+                ProductTypes.SHOE -> {
+                    ShoesCard(name,brand,price.toInt(), itemArray[3].toFloat())
+                }
+            }
+            productCard.printInfo()
+        }
+
+
+    }
+
+    private fun enterName(): String {
+        print("Enter the product name: ")
+        return readln()
+    }
+
+    private fun enterBrand(): String {
+        print("Enter the product brand: ")
+        return readln()
+    }
+
+    private fun enterPrice(): Int {
+        print("Enter the product price: ")
+        return readln().toInt()
+    }
+
+    private fun enterId(): Int{
+        print("Enter id: ")
+        return readln().toInt()
+    }
+    private fun enterNameWorker(): String {
+        print("Enter the name: ")
+        return readln()
+    }
+    private fun enterAge(): Int{
+        print("Enter age: ")
+        return readln().toInt()
+    }
+
     private fun registerNewItem() {
 
         print("Enter the product type.")
@@ -175,19 +281,5 @@ class Accountant(
         }
         file.appendText("$productTypesIndex\n")
 
-    }
-    private fun enterName(): String {
-        print("Enter the product name: ")
-        return readln()
-    }
-
-    private fun enterBrand(): String {
-        print("Enter the product brand: ")
-        return readln()
-    }
-
-    private fun enterPrice(): Int {
-        print("Enter the product price: ")
-        return readln().toInt()
     }
 }
