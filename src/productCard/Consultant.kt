@@ -3,9 +3,10 @@ package productCard
 import kotlin.random.Random
 
 class Consultant(
+    id: Int,
    name: String,
-   age:Int = 0
-): Worker(name, age) {
+   age:Int
+): Worker(id, name, age, positionCode = PositionCode.CONSULTANT) {
     fun sayHello(){
         print("Hi! My name is $name.")
         if (age>0){

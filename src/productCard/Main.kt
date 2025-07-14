@@ -1,8 +1,7 @@
 package productCard
 
 fun main() {
-//    val shoesCard = ShoesCard("Sneakers", "Nike", 3000, 42.5f)
-//    shoesCard.printInfo()
+
 //    val assistant = Assistant("Helen")
 //    val coffee = assistant.bringCoffee()
 //    val consultant = Consultant("Nick",30)
@@ -10,6 +9,6 @@ fun main() {
 //    val director = Director("Andrey", 30)
 //    director.takeCoffee(assistant, coffee)
 //    consultant.costumerClient()
-    val accountant = Accountant("John", 23)
+    val accountant = Accountant(1,"John", 23)
     accountant.work()
 }

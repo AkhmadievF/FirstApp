@@ -1,7 +1,10 @@
 package productCard
 
-class Assistant(val name: String,
-    val age:Int = 0) {
+class Assistant(
+    id: Int,
+    name: String,
+    age:Int,
+    ): Worker(id, name, age, positionCode = PositionCode.ASSISTANT) {
 
     fun bringCoffee(count: Int = 1, coffeeType: String = "Cappuccino"): String{
         repeat(count) {
@@ -16,7 +19,7 @@ class Assistant(val name: String,
         }
         return "Espresso"
     }
-    fun work(){
+    override fun work(){
         println("I am answering phone...")
     }
 

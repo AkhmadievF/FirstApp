@@ -3,7 +3,7 @@ package productCard
 class Director(
     id: Int,
     name: String,
-    age: Int): Worker(id, name, age) {
+    age: Int): Worker(id, name, age, positionCode = PositionCode.DIRECTOR) {
     fun takeCoffee(assistant: Assistant, coffeeType: String){
         assistant.bringCoffee(1,coffeeType)
         println("Thank you ${assistant.name}. $coffeeType is very tasty!")
