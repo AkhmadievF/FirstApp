@@ -10,5 +10,14 @@ fun main() {
 //    director.takeCoffee(assistant, coffee)
 //    consultant.costumerClient()
     val accountant = Accountant(1,"John", 23)
-    accountant.work()
+    val employees = accountant.loadAllEmployees()
+    for (employee in employees){
+        if (employee is Cleaner) {
+
+            employee.clean()
+        }
+        if (employee is Supplier){
+            employee.buyThing()
+        }
+    }
 }

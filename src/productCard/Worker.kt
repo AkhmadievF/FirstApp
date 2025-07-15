@@ -8,7 +8,7 @@ open class Worker(
     val age: Int,
     val positionCode: PositionCode) {
     open fun work(){
-        println("I am working...")
+        println("Worker $name am working...")
     }
     open fun printInfoEmployee(){
         println("id: $id, name is: $name, age is: $age, Position: ${positionCode.title}")

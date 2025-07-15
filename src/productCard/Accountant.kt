@@ -6,7 +6,7 @@ class Accountant(
     id: Int,
     name: String,
     age: Int,
-) : Worker(id, name, age, positionCode = PositionCode.ACCOUNTANT) {
+) : Worker(id, name, age, positionCode = PositionCode.ACCOUNTANT), Cleaner, Supplier {
 
     val items = mutableListOf<ProductCard>()
     val productTypes = ProductTypes.entries
@@ -217,7 +217,7 @@ class Accountant(
             worker.printInfoEmployee()
         }
     }
-    private fun loadAllEmployees(): MutableList<Worker> {
+    fun loadAllEmployees(): MutableList<Worker> {
         val itemsInArray = mutableListOf<Worker>()
         val items = fileWorker.readText()
         if (items.isEmpty()) {
@@ -346,5 +346,12 @@ class Accountant(
     private fun enterAge(): Int {
         print("Enter age: ")
         return readln().toInt()
+    }
+
+    override fun clean() {
+        println("Accountant $name is cleaning workplace. . .")
+    }
+    override fun buyThing() {
+        println("Accountant $name is buying things. . .")
     }
 }

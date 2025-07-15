@@ -6,7 +6,7 @@ class Consultant(
     id: Int,
    name: String,
    age:Int
-): Worker(id, name, age, positionCode = PositionCode.CONSULTANT) {
+): Worker(id, name, age, positionCode = PositionCode.CONSULTANT), Cleaner {
     fun sayHello(){
         print("Hi! My name is $name.")
         if (age>0){
@@ -20,5 +20,9 @@ class Consultant(
             print("The costumer is served...")
         }
         println("\n${name} served $rand client")
+    }
+
+    override fun clean() {
+        println("Consultant $name is cleaning workplace . . .")
     }
 }

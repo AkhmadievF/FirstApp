@@ -1,9 +1,18 @@
 package HomeWork
 
 fun main() {
-    val c = readln().split(" ")
-    val deliveryObject = DeliveryObject(c[0].toInt(), c[1].toInt(), c[2].toInt(), c[3].toDouble())
-    val  warehouse = Warehouse()
-   val cargo:Cargo = warehouse.packCargo(deliveryObject)
-    cargo.printInfo()
+    val encryptor = Encryptor()
+    println(encryptor.process("sensitive data"))
+
+    println(encryptor.transform("sensitive data"))
+
+    val compressor = Compressor()
+
+    println(compressor.process("large data"))
+
+    println(compressor.transform("large data"))
+
+    val logger = Logger()
+
+    println(logger.process("log data"))
 }

@@ -3,7 +3,7 @@ package productCard
 class Director(
     id: Int,
     name: String,
-    age: Int): Worker(id, name, age, positionCode = PositionCode.DIRECTOR) {
+    age: Int): Worker(id, name, age, positionCode = PositionCode.DIRECTOR), Supplier {
     fun takeCoffee(assistant: Assistant, coffeeType: String){
         assistant.bringCoffee(1,coffeeType)
         println("Thank you ${assistant.name}. $coffeeType is very tasty!")
@@ -13,6 +13,10 @@ class Director(
     }
 
     override fun work() {
-        println("I am drinking coffee...")
+        println("Director $name  drinking coffee...")
+    }
+
+    override fun buyThing() {
+        println("Director $name is buying things. . .")
     }
 }
