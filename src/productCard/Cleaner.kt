@@ -1,5 +1,7 @@
 package productCard
 
 interface Cleaner {
-    fun clean()
+    fun clean(){
+        println("")
+    }
 }
