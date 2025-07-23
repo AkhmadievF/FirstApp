@@ -32,6 +32,7 @@ fun main() {
             REGISTER_NEW_EMPLOYEE -> TODO()
             FIRE_AN_EMPLOYEE -> TODO()
             SHOW_ALL_EMPLOYEE -> TODO()
+            CHANGE_SALARY -> TODO()
         }
     }
 

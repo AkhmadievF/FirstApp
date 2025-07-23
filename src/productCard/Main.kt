@@ -10,14 +10,6 @@ fun main() {
 //    director.takeCoffee(assistant, coffee)
 //    consultant.costumerClient()
     val accountant = Accountant(1,"John", 23)
-    val employees = accountant.loadAllEmployees()
-    for (employee in employees){
-        if (employee is Cleaner) {
+    accountant.work()
 
-            employee.clean()
-        }
-        if (employee is Supplier){
-            employee.buyThing()
-        }
-    }
 }
