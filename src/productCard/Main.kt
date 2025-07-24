@@ -9,7 +9,7 @@ fun main() {
 //    val director = Director("Andrey", 30)
 //    director.takeCoffee(assistant, coffee)
 //    consultant.costumerClient()
-    val accountant = Accountant(1,"John", 23)
+    val accountant = Accountant(1,"John", 23, 16000)
     accountant.work()
 
 }

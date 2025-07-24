@@ -6,11 +6,13 @@ open class Worker(
     val id: Int,
     val name: String,
     val age: Int,
-    val positionCode: PositionCode) {
+    salary:Int,
+    val positionCode: PositionCode,
+    ) {
 
     var salary = 15000
         set(value) {
-            if (field<value){
+            if (field>value){
                 println("new salary is too small...")
             }
             else{

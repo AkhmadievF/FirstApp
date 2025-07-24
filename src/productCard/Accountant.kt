@@ -6,14 +6,13 @@ class Accountant(
     id: Int,
     name: String,
     age: Int,
-) : Worker(id, name, age, positionCode = PositionCode.ACCOUNTANT), Cleaner, Supplier {
-
+    salary:Int) : Worker(id, name, age, salary, positionCode = PositionCode.ACCOUNTANT), Cleaner, Supplier {
+    private val workersRepository = WorkersRepository()
     val items = mutableListOf<ProductCard>()
     val productTypes = ProductTypes.entries
     val operationCode = OperationCode.entries
-    val positions = PositionCode.entries
     val file = File("ProductCards")
-    val fileWorker = File("Workers")
+
 
     override fun work() {
         while (true) {
@@ -51,20 +50,11 @@ class Accountant(
 
     }
     fun changeSalary(){
-
         println("Enter the id: ")
         val id = readln().toInt()
         println("Enter new salary: ")
         val salary = readln().toInt()
-        val itemsInArray = loadAllEmployees()
-        fileWorker.writeText("")
-        for (employee in itemsInArray) {
-            if (employee.id == id){
-                employee.salary = salary
-                }
-            saveEmployeeToFile(employee)
-        }
-
+        workersRepository.changeSalary(id, salary)
     }
     fun removeProductCard() {
         val itemsInArray: MutableList<ProductCard> = loadAllCards()
@@ -148,11 +138,9 @@ class Accountant(
                     val caloric = itemArray[3].toInt()
                     FoodCard(name, brand, price.toInt(), caloric)
                 }
-
                 ProductTypes.APPLIANCE -> {
                     ApplianceCard(name, brand, price.toInt(), itemArray[3].toInt())
                 }
-
                 ProductTypes.SHOE -> {
                     ShoesCard(name, brand, price.toInt(), itemArray[3].toFloat())
                 }
@@ -163,124 +151,42 @@ class Accountant(
     }
 
     private fun registerNewEmployee() {
-
+        val  positions = PositionCode.entries
         print("Choose position ")
         for ((type, index) in positions.withIndex()) {
-            print(" ${index.title} - $type,")
+            print("$type - ${index.title},")
         }
         println("\b:")
-        val index = readln().toInt()
-        val positionCodeIndex = positions[index]
+        val postionIndex = readln().toInt()
+        val position = positions[postionIndex]
+
         val id = enterId()
-        fileWorker.appendText("$id%")
         val name = enterNameWorker()
-        fileWorker.appendText("$name%")
         val age = enterAge()
-        fileWorker.appendText("$age%")
         println("Enter salary: ")
         val salary = readln().toInt()
-        fileWorker.appendText("$salary%")
-        fileWorker.appendText("$positionCodeIndex\n")
-
+        val worker = when(position){
+            PositionCode.DIRECTOR -> Director(id, name, age, salary)
+            PositionCode.ACCOUNTANT -> Accountant(id, name, age, salary)
+            PositionCode.ASSISTANT ->Assistant(id, name, age, salary)
+            PositionCode.CONSULTANT -> Consultant(id, name, age, salary)
+        }
+        workersRepository.registerNewEmployee(worker)
     }
 
+
     private fun showAllEmployees() {
-        val worker = fileWorker.readText()
-        if (worker.isEmpty()) {
-            return
-        }
-        val workers = worker.trim().split("\n")
-        for (person in workers) {
-            val itemArray = person.split("%")
-            val id = itemArray[0]
-            val name = itemArray[1]
-            val age = itemArray[2]
-            val salary = itemArray[3].toInt()
-            val type = itemArray.last()
-            val position = PositionCode.valueOf(type)
-            val worker = when (position) {
-                PositionCode.DIRECTOR -> {
-                    Director(id.toInt(), name, age.toInt())
-                }
-                PositionCode.ACCOUNTANT -> {
-                    Accountant(id.toInt(), name, age.toInt())
-                }
-                PositionCode.ASSISTANT -> {
-                    Assistant(id.toInt(), name, age.toInt())
-                }
-                PositionCode.CONSULTANT ->{
-                    Consultant(id.toInt(), name, age.toInt())
-                }
-            }
-            worker.salary = salary
+        val workers = workersRepository.loadAllEmployees()
+        for (worker in workers){
             worker.printInfoEmployee()
         }
     }
-    fun loadAllEmployees(): MutableList<Worker> {
-        val itemsInArray = mutableListOf<Worker>()
-        val items = fileWorker.readText()
-        if (items.isEmpty()) {
-            return itemsInArray
-        }
-        val workers = items.trim().split("\n")
-        for (person in workers) {
-            val itemArray = person.split("%")
-            val id = itemArray[0]
-            val name = itemArray[1]
-            val age = itemArray[2]
-            val salary = itemArray[3].toInt()
-            val type = itemArray.last()
-            val position = PositionCode.valueOf(type)
-            val worker = when (position) {
-                PositionCode.DIRECTOR -> {
-                    Director(id.toInt(), name, age.toInt())
-                }
-                PositionCode.ACCOUNTANT -> {
-                    Accountant(id.toInt(), name, age.toInt())
-                }
-                PositionCode.ASSISTANT -> {
-                    Assistant(id.toInt(), name, age.toInt())
-                }
-                PositionCode.CONSULTANT ->{
-                    Consultant(id.toInt(), name, age.toInt())
-                }
-            }
-            worker.salary = salary
-            itemsInArray.add(worker)
 
-        }
-        return itemsInArray
-    }
-    fun fireAnEmployee() {
-
-
+    private fun fireAnEmployee() {
         println("Enter the id: ")
         val id = readln().toInt()
-        val itemsInArray: MutableList<Worker> = loadAllEmployees()
-        fileWorker.writeText("")
-        for (employee in itemsInArray) {
-            if (employee.id != id){
-                saveEmployeeToFile(employee)
-            }
-
+        workersRepository.fireAnEmployee(id)
         }
-    }
-    fun saveEmployeeToFile(worker: Worker) {
-        fileWorker.appendText("${worker.id}%")
-        fileWorker.appendText("${worker.name}%")
-        fileWorker.appendText("${worker.age}%")
-        fileWorker.appendText("${worker.salary}%")
-        if (worker is Director) {
-            fileWorker.appendText("${PositionCode.DIRECTOR}\n")
-        } else if (worker is Accountant) {
-            fileWorker.appendText("${PositionCode.ACCOUNTANT}\n")
-        } else if (worker is Assistant) {
-            fileWorker.appendText("${PositionCode.ASSISTANT}\n")
-        } else if (worker is Consultant) {
-            fileWorker.appendText("${PositionCode.CONSULTANT}\n")
-        }
-
-    }
 
     private fun registerNewItem() {
 

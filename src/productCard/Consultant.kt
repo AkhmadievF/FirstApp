@@ -5,8 +5,8 @@ import kotlin.random.Random
 class Consultant(
     id: Int,
    name: String,
-   age:Int
-): Worker(id, name, age, positionCode = PositionCode.CONSULTANT), Cleaner {
+   age:Int,
+    salary:Int): Worker(id, name, age,salary, positionCode = PositionCode.CONSULTANT), Cleaner {
     fun sayHello(){
         print("Hi! My name is $name.")
         if (age>0){

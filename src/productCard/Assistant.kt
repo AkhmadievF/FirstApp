@@ -4,7 +4,7 @@ class Assistant(
     id: Int,
     name: String,
     age:Int,
-    ): Worker(id, name, age, positionCode = PositionCode.ASSISTANT), Cleaner, Supplier {
+    salary:Int): Worker(id, name, age,salary, positionCode = PositionCode.ASSISTANT), Cleaner, Supplier {
 
     fun bringCoffee(count: Int = 1, coffeeType: String = "Cappuccino"): String{
         repeat(count) {
